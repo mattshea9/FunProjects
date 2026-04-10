@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tour de Costco: Denver</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red: #E31837;
+      --blue: #005DAA;
+      --yellow: #FFD700;
+      --green: #00A651;
+      --white: #F5F0E8;
+      --dark: #0D0D0D;
+      --mid: #1A1A2E;
+      --cream: #FFF8EE;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--dark);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(0,93,170,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(227,24,55,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 30% at 10% 70%, rgba(255,215,0,0.12) 0%, transparent 55%),
+        #0D0D0D;
+    }
+
+    /* diagonal stripe texture */
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        -55deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.018) 40px,
+        rgba(255,255,255,0.018) 41px
+      );
+    }
+
+    /* animated road lines */
+    .road-lines {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 120px;
+      overflow: hidden;
+    }
+    .road-lines::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: -100%;
+      width: 300%;
+      height: 6px;
+      background: repeating-linear-gradient(90deg,
+        transparent 0, transparent 60px,
+        var(--yellow) 60px, var(--yellow) 120px
+      );
+      animation: roadScroll 2s linear infinite;
+    }
+    @keyframes roadScroll { to { transform: translateX(33.33%); } }
+
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+    .sponsor-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: white;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 1.8rem;
+      animation: fadeDown 0.6s ease both;
+    }
+    .sponsor-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.5rem;
+      animation: fadeDown 0.6s 0.1s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 14vw, 12rem);
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+      animation: fadeDown 0.7s 0.2s ease both;
+    }
+
+    .hero h1 .line-tour { color: var(--white); }
+    .hero h1 .line-de {
+      color: var(--yellow);
+      font-size: 0.55em;
+      display: block;
+      letter-spacing: 0.08em;
+    }
+    .hero h1 .line-costco { color: var(--red); }
+
+    .hero-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.5rem, 4vw, 2.6rem);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-top: 0.4rem;
+      animation: fadeDown 0.7s 0.35s ease both;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--yellow);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.55);
+    }
+    .stat-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.15);
+      align-self: stretch;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      animation: fadeUp 0.8s 0.7s ease both;
+    }
+
+    .btn-primary {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--dark);
+      background: var(--yellow);
+      padding: 16px 44px;
+      display: inline-block;
+      position: relative;
+      transition: transform 0.15s, box-shadow 0.15s;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(255,215,0,0.35);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    /* ── INFO GRID ── */
+    .info-section { background: #111118; border-top: 1px solid rgba(255,255,255,0.06); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.07);
+      margin-top: 3.5rem;
+    }
+    .info-card {
+      background: #111118;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+    .info-card:hover { background: #16161f; }
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent, var(--red));
+    }
+    .info-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .info-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.45);
+      margin-bottom: 0.5rem;
+    }
+    .info-card p {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--white);
+    }
+    .info-card .big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--accent, var(--red));
+      line-height: 1;
+    }
+
+    /* ── ROUTE ── */
+    .route-section { background: var(--dark); }
+
+    .route-visual {
+      margin-top: 3.5rem;
+      position: relative;
+    }
+
+    .costco-stops {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      position: relative;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+    }
+
+    .stop {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+      min-width: 130px;
+      position: relative;
+    }
+
+    .stop-connector {
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      right: -50%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--blue) 100%);
+      z-index: 0;
+    }
+    .stop:last-child .stop-connector { display: none; }
+
+    .stop-dot {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--dark);
+      border: 3px solid var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: var(--red);
+      position: relative;
+      z-index: 1;
+      transition: transform 0.2s, border-color 0.2s, color 0.2s;
+      cursor: default;
+    }
+    .stop:hover .stop-dot {
+      transform: scale(1.15);
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+    .stop.special .stop-dot {
+      border-color: var(--green);
+      color: var(--green);
+      background: rgba(0,166,81,0.08);
+    }
+    .stop-label {
+      margin-top: 0.9rem;
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.3;
+    }
+    .stop.special .stop-label { color: var(--green); }
+    .stop-badge {
+      margin-top: 0.4rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .start-end {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .start-end-card {
+      flex: 1;
+      min-width: 260px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 1.8rem;
+      border-radius: 2px;
+    }
+    .start-end-card h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+    .start-end-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--white);
+    }
+    .start-end-card .time-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: var(--yellow);
+      line-height: 1;
+    }
+
+    /* ── JERSEYS ── */
+    .jerseys-section {
+      background: #0a0a12;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .jerseys-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .jersey-card {
+      position: relative;
+      padding: 3rem 2.5rem 2.5rem;
+      border-radius: 3px;
+      overflow: hidden;
+      transition: transform 0.25s;
+      cursor: default;
+    }
+    .jersey-card:hover { transform: translateY(-6px); }
+
+    .jersey-card.yellow-jersey {
+      background: linear-gradient(135deg, #1a1500 0%, #2d2300 100%);
+      border: 1px solid rgba(255,215,0,0.25);
+    }
+    .jersey-card.green-jersey {
+      background: linear-gradient(135deg, #001a0a 0%, #002d14 100%);
+      border: 1px solid rgba(0,166,81,0.25);
+    }
+    .jersey-card.polka-jersey {
+      background: linear-gradient(135deg, #14001a 0%, #220030 100%);
+      border: 1px solid rgba(200,120,255,0.2);
+    }
+
+    .jersey-glow {
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.35;
+    }
+    .yellow-jersey .jersey-glow { background: var(--yellow); }
+    .green-jersey .jersey-glow { background: var(--green); }
+    .polka-jersey .jersey-glow { background: #c87fff; }
+
+    .jersey-icon {
+      font-size: 4rem;
+      margin-bottom: 1.2rem;
+      display: block;
+      position: relative;
+    }
+
+    .jersey-color-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .yellow-jersey .jersey-color-name { color: var(--yellow); }
+    .green-jersey .jersey-color-name { color: var(--green); }
+    .polka-jersey .jersey-color-name { color: #c87fff; }
+
+    .jersey-award {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--white);
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+    }
+
+    .jersey-note {
+      font-size: 0.83rem;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* ── FOOTER / DATE ── */
+    .date-section {
+      background: var(--red);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .date-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent, transparent 30px,
+        rgba(0,0,0,0.06) 30px, rgba(0,0,0,0.06) 31px
+      );
+    }
+    .date-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: white;
+      position: relative;
+    }
+    .date-section p {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.8rem;
+      position: relative;
+    }
+    .date-section .tbd {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--yellow);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer p {
+      font-size: 0.8rem;
+      color: rgba(245,240,232,0.3);
+      letter-spacing: 0.1em;
+    }
+    footer .tagline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.55);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── DIVIDER ── */
+    .stripe-divider {
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--red) 0, var(--red) 33.3%,
+        var(--blue) 33.3%, var(--blue) 66.6%,
+        var(--yellow) 66.6%, var(--yellow) 100%
+      );
+    }
+
+    /* ── SCROLL REVEAL (JS) ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .stat-divider { display: none; }
+      .costco-stops { gap: 0.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="road-lines"></div>
+    <div class="hero-content">
+      <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.8rem;animation:fadeDown 0.6s ease both;">
+        <div class="sponsor-badge" style="margin-bottom:0;"><span class="dot"></span>Official Race Communiqué<span class="dot"></span></div>
+        <div class="sponsor-badge" style="margin-bottom:0;background:linear-gradient(135deg,#c0560a,#e87722);"><span class="dot" style="background:#fff;"></span>Sponsored by Franksgiving<span class="dot" style="background:#fff;"></span></div>
+      </div>
+      <p class="hero-eyebrow">Denver, Colorado</p>
+      <h1>
+        <span class="line-tour">TOUR</span>
+        <span class="line-de">de</span>
+        <span class="line-costco">COSTCO</span>
+      </h1>
+      <p class="hero-sub">Denver Edition</p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">6</span>
+          <span class="stat-label">Costcos</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">66.2</span>
+          <span class="stat-label">Miles</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Hot Dogs</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Jerseys</span>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#info" class="btn-primary">Ride the Route ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <!-- INFO CARDS -->
+  <section class="info-section" id="info">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Race Details</p>
+        <h2 class="section-title">The Essentials</h2>
+      </div>
+      <div class="info-grid reveal">
+        <div class="info-card" style="--accent: var(--red)">
+          <span class="info-icon">🗓️</span>
+          <h3>Date</h3>
+          <p class="big">TBD</p>
+          <p>Stay tuned — announcement coming soon</p>
+        </div>
+        <div class="info-card" style="--accent: var(--blue)">
+          <span class="info-icon">⏰</span>
+          <h3>Start Time</h3>
+          <p class="big">9:30<small style="font-size:1rem"> AM</small></p>
+          <p>Wheels down, no excuses</p>
+        </div>
+        <div class="info-card" style="--accent: var(--yellow)">
+          <span class="info-icon">📍</span>
+          <h3>Start Location</h3>
+          <p>5195 Wadsworth Blvd #676b<br>Arvada, CO 80002</p>
+        </div>
+        <div class="info-card" style="--accent: var(--red)">
+          <span class="info-icon">🚲</span>
+          <h3>Total Distance</h3>
+          <p class="big">66.2<small style="font-size:1rem"> mi</small></p>
+          <p>Across all 6 Denver-area Costcos</p>
+        </div>
+        <div class="info-card" style="--accent: var(--blue)">
+          <span class="info-icon">🏪</span>
+          <h3>Costcos Visited</h3>
+          <p class="big">6</p>
+          <p>Every bulk warehouse on the route</p>
+        </div>
+        <div class="info-card" style="--accent: var(--green)">
+          <span class="info-icon">🌭</span>
+          <h3>Mandatory Fuel</h3>
+          <p>$1.50 hot dogs<br>Free samples <span style="color:rgba(245,240,232,0.4);font-style:italic">— it's the law</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <!-- ROUTE -->
+  <section class="route-section">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">The Route</p>
+        <h2 class="section-title">Six Stops. Zero Excuses.</h2>
+      </div>
+
+      <div class="route-visual reveal">
+        <div class="costco-stops">
+
+          <div class="stop">
+            <div class="stop-connector"></div>
+            <div class="stop-dot">1</div>
+            <div class="stop-label">Costco #1<br><span style="font-size:0.68rem;color:rgba(245,240,232,0.35);font-style:italic;">5195 Wadsworth Blvd<br>Arvada, CO 80002</span></div>
+          </div>
+
+          <div class="stop">
+            <div class="stop-connector"></div>
+            <div class="stop-dot">2</div>
+            <div class="stop-label">Costco #2<br><span style="font-size:0.68rem;color:rgba(245,240,232,0.35);font-style:italic;">4741 Airport Way<br>Denver, CO 80239</span></div>
+          </div>
+
+          <div class="stop special">
+            <div class="stop-connector"></div>
+            <div class="stop-dot">3</div>
+            <div class="stop-label">Costco #3<br><span style="font-size:0.68rem;color:rgba(0,166,81,0.7);font-style:italic;">1471 S Havana St<br>Aurora, CO 80012</span></div>
+            <div class="stop-badge">⚡ Sprint Stage</div>
+          </div>
+
+          <div class="stop">
+            <div class="stop-connector"></div>
+            <div class="stop-dot">4</div>
+            <div class="stop-label">Costco #4<br><span style="font-size:0.68rem;color:rgba(245,240,232,0.35);font-style:italic;">4000 River Point Pkwy<br>Englewood, CO 80110</span></div>
+          </div>
+
+          <div class="stop">
+            <div class="stop-connector"></div>
+            <div class="stop-dot">5</div>
+            <div class="stop-label">Costco #5<br><span style="font-size:0.68rem;color:rgba(245,240,232,0.35);font-style:italic;">7900 W Quincy Ave<br>Littleton, CO 80123</span></div>
+          </div>
+
+          <div class="stop">
+            <div class="stop-dot" style="border-color:var(--yellow);color:var(--yellow);">6</div>
+            <div class="stop-label" style="color:var(--yellow);">Finish 🏁<br><span style="font-size:0.68rem;color:rgba(255,215,0,0.5);font-style:italic;">Back to Costco #1<br>5195 Wadsworth Blvd<br>Arvada, CO 80002</span></div>
+          </div>
+
+        </div>
+
+        <div class="start-end">
+          <div class="start-end-card">
+            <h4>🟢 Race Start</h4>
+            <div class="time-big">9:30</div>
+            <p style="color:rgba(245,240,232,0.5);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.1em;font-size:0.9rem;">AM</p>
+            <p style="margin-top:0.8rem;">5195 Wadsworth Blvd #676b<br>Arvada, CO 80002</p>
+          </div>
+          <div class="start-end-card" style="border-color:rgba(255,215,0,0.15);">
+            <h4 style="color:var(--yellow);">🏁 Race Finish</h4>
+            <div class="time-big" style="color:var(--yellow);">5:30<small style="font-size:1rem"> PM</small></div>
+            <p style="color:rgba(245,240,232,0.5);font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;margin-top:0.3rem;letter-spacing:0.08em;">Estimated Finish · Back where it all began</p>
+            <p style="margin-top:0.8rem;">5195 Wadsworth Blvd #676b<br>Arvada, CO 80002</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <!-- STRAVA ROUTE -->
+  <section style="background:#0a0a12;padding:5rem 2rem;border-bottom:1px solid rgba(255,255,255,0.06);">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Strava Route</p>
+        <h2 class="section-title">Ride the Map</h2>
+        <p style="margin-top:1rem;color:rgba(245,240,232,0.5);max-width:520px;line-height:1.7;">View the full 66.2-mile route across all six Denver-area Costcos — every climb, every turn, every hot dog stop.</p>
+      </div>
+      <div class="reveal" style="margin-top:2.5rem;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+        <div class="strava-embed-placeholder" data-embed-type="route" data-embed-id="3409282069205959896" data-style="standard" data-from-embed="false"></div>
+        <script src="https://strava-embeds.com/embed.js"></script>
+      </div>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <!-- JERSEYS / PRIZES -->
+  <section class="jerseys-section">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Prizes & Glory</p>
+        <h2 class="section-title">Fight for the Jersey</h2>
+        <p style="margin-top:1rem;color:rgba(245,240,232,0.5);max-width:520px;line-height:1.7;">Three coveted jerseys. One glorious day of cycling and bulk consumption. Honor your inner champion.</p>
+      </div>
+
+      <div class="jerseys-grid">
+
+        <div class="jersey-card yellow-jersey reveal">
+          <div class="jersey-glow"></div>
+          <span class="jersey-icon">🟡</span>
+          <div class="jersey-color-name">Yellow Jersey</div>
+          <div class="jersey-award">Most Hot Dogs Consumed</div>
+          <p class="jersey-note">Awarded to the rider who wolfed down the greatest number of $1.50 hot dogs across all six Costcos. Condiments encouraged. Dignity optional.</p>
+        </div>
+
+        <div class="jersey-card green-jersey reveal">
+          <div class="jersey-glow"></div>
+          <span class="jersey-icon">🟢</span>
+          <div class="jersey-color-name">Green Jersey</div>
+          <div class="jersey-award">Fastest Costco Consumed</div>
+          <p class="jersey-note">A timed sprint competition at Costco #3. First rider to finish their Costco order and exit wins the points — and the green jersey. Speed eating is a sport.</p>
+        </div>
+
+        <div class="jersey-card polka-jersey reveal">
+          <div class="jersey-glow"></div>
+          <span class="jersey-icon">🔵</span>
+          <div class="jersey-color-name">Polka Dot Jersey</div>
+          <div class="jersey-award">Most Calories Consumed</div>
+          <p class="jersey-note">The King (or Queen) of the Mountains of Food. Track every calorie — from samples to rotisserie chickens — and claim your polka dot glory.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DATE ANNOUNCE -->
+  <section class="date-section">
+    <h2>DATE TO BE ANNOUNCED</h2>
+    <p class="tbd">Stay Hungry. Stay Ready.</p>
+    <p style="margin-top:1.5rem;">Follow along for updates on the official race date.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="tagline">Tour de Costco: Denver — Est. 2025</p>
+    <p>66.2 miles · 6 Costcos · 3 Jerseys · 1 Legend</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
